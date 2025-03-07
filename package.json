@@ -1,0 +1,26 @@
+{
+  "name": "velocity-tech-test-03",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "shopify theme dev --store=velocity-dev-test.myshopify.com --theme-editor-sync",
+    "lint": "eslint",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "eslint": "^9.22.0"
+  },
+  "devDependencies": {
+    "@shopify/prettier-plugin-liquid": "^1.9.0",
+    "prettier": "^3.5.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Grant-Feast/velocity-tech-test-03.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Grant-Feast/velocity-tech-test-03/issues"
+  },
+  "homepage": "https://github.com/Grant-Feast/velocity-tech-test-03#readme"
+}
