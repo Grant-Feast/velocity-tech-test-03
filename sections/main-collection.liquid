@@ -1,0 +1,31 @@
+{{ 'collection.css' | asset_url | stylesheet_tag }}
+
+<div class="collection-container">
+  {%- assign collection = collections[section.settings.collection] -%}
+  <div class="collection-title">
+    <h1>{{ collection.title }}</h1>
+    </div>
+    <div class="collection-grid">
+    {%- for product in collection.products -%}
+      {%- render 'product-card', product: product %}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Grid",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Grid"
+    }
+  ]
+}
+{% endschema %}
