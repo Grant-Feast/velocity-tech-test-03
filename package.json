@@ -2,7 +2,7 @@
   "name": "velocity-tech-test-03",
   "version": "1.0.0",
   "scripts": {
-    "dev": "shopify theme dev --store=velocity-dev-test.myshopify.com --theme-editor-sync",
+    "dev": "shopify theme dev --store=velocity-dev-test.myshopify.com",
     "lint": "eslint",
     "format": "prettier --write ."
   },

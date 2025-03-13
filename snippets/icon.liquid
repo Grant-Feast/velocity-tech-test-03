@@ -1,0 +1,35 @@
+{% comment %}
+Renders an SVG icon
+
+Accepts:
+- icon: {String} Name of icon (Required)
+- class: {String} Class List (Required)
+- colour: {String} Colour of the icon, defaults to 'black'
+- thickness: {String} Width of the stroke, defaults to 'stroke-2'
+
+Usage:
+{% render 'icon' icon: 'star' class: 'fill-black' %}
+
+Available Icons: (from Nucleo)
+- plus
+- minus
+{% endcomment %}
+
+{% capture classes %}class="{{ class }} {{ colour | default: 'stroke-black' }} {{ thickness | default: 'stroke-2' }}"{%
+endcapture %}
+
+{% case icon %}
+{% when 'plus' %}
+<svg {{ classes }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <g stroke-linecap="square" stroke-linejoin="miter" fill="none" stroke-miterlimit="10">
+    <line x1="24" y1="14" x2="24" y2="34"></line>
+    <line x1="34" y1="24" x2="14" y2="24"></line>
+  </g>
+</svg>
+{% when 'minus' %}
+<svg {{ classes }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <g stroke-linecap="square" stroke-linejoin="miter" fill="none" stroke-miterlimit="10">
+    <line x1="34" y1="24" x2="14" y2="24"></line>
+  </g>
+</svg>
+{% endcase %}

@@ -1,0 +1,62 @@
+{% comment %}
+  Renders a specific image.
+
+  Arguments:
+  - image: {Liquid Object} Img object (required)
+  - width: {string} Original width to serve (required)
+  - sizes: {string} Comma separated string of sizes (required)
+  - lazyload: {boolean} Lazyload the image (optional)
+  - alt: {string} Custom image ALT (optional)
+  - priority: {string} Fetch priority of image (optional)
+  - position: {string} Position of image (relative/absolute) (optional)
+  - classes: {string} Additional classes
+
+  Usage:
+  {% render 'image', image: product.featured_image %}
+{% endcomment %}
+
+{% liquid
+  assign image_alt = alt | default: image.alt | escape
+  assign image_width = width
+  assign image_sizes = sizes
+  assign preload = false
+  assign image_position = ''
+  assign fetch_priority = priority | default: 'auto'
+
+  if position == 'absolute'
+    assign image_position = 'absolute inset-0'
+  endif
+
+  if lazyload or lazyload == null
+    assign lazyload = 'lazy'
+    assign decoding = 'async'
+  elsif lazyload == false
+    assign preload = true
+    assign lazyload = 'eager'
+    assign decoding = 'auto'
+  endif
+
+  assign image_classes = 'img-cover ' | append: image_position
+
+  if classes
+    assign image_classes = image_classes | append: ' ' | append: classes
+  endif
+%}
+
+{% if image != blank %}
+  {{
+    image
+    | image_url: width: image_width
+    | image_tag:
+      alt: image_alt,
+      class: image_classes,
+      widths: '165, 360, 500, 720, 960, 1066, 1280, 1500, 1800',
+      sizes: image_sizes,
+      loading: lazyload,
+      preload: preload,
+      fetchPriority: fetch_priority,
+      decoding: decoding
+  }}
+{% else %}
+  {{ 'image' | placeholder_svg_tag: 'placeholder-image' }}
+{% endif %}

@@ -1,0 +1,90 @@
+{{ 'product-card.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="product-card-container"
+  data-product-card
+  data-product-handle="{{- product.handle -}}">
+  <div class="product-badge-container">
+    {% if product.metafields.custom.product_badges %}
+      {% assign badges = product.metafields.custom.product_badges.value %}
+
+      {% for badge in badges %}
+        <div class="product-badge" style="background-color: {{ badge.background_color }};">
+              <span class="badge-icon">
+                  {% render 'image',
+                    image: badge.badge_icon,
+                    lazyload: true,
+                  %}
+              </span>
+              <span class="badge-text">
+                {{- badge.text -}}
+              </span>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <div class="product-card-inner">
+    <a
+      href="{{- product.url -}}"
+      class="product-image-link">
+      {%- for image in product.images limit: 2 -%}
+          <div class="image-container">
+            {%- render 'image',
+              image: image,
+              width: image.width,
+              lazyload: true,
+              sizes: '(min-width: 1536px) calc((90vw - 112px) / 4), (min-width: 1024px) calc((100vw - 112px) / 4), (min-width: 768px) calc((100vw - 112px) / 3), (min-width: 480px) calc((100vw - 37px) / 2), calc((100vw - 32px) / 1.25)',
+              classes: 'product-image'
+            %}
+          </div>
+      {%- endfor -%}
+    </a>
+  </div>
+
+  <div class="product-title-container">
+    
+    <div class="product-info">
+      <div>
+        <h4 class="product-title">
+          <a href="{{- product.url -}}">{{- product.title -}}</a>
+        </h4>
+    
+        <span class="product-card-variant">
+          Size {{ product.variants.first.title }}
+        </span>
+      </div>
+      {%- if product.compare_at_price > product.price -%}
+        <span class="product-price">{{- product.price | money -}}</span>
+        <span class="product-price-old">
+          {{- product.compare_at_price | money -}}
+        </span>
+      {%- else -%}
+        <div class="product-price">{{- product.price | money -}}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="product-form-container">
+      {%- form 'product', product, class: 'product-form', novalidate: 'novalidate', data-type: 'add-to-cart-form'
+      -%}
+      
+      {%- render 'quantity-adjuster' -%}
+      
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      
+      <button type="submit" class="add-to-bag" data-product-form-btn>
+        {% assign currency_symbol = localization.country.currency.symbol %}
+      
+        <span>Add to bag - </span>
+        <span class="price-display">
+          <span>{{ currency_symbol }}</span>
+          <span id="actPrice"
+            data-price="{{ product.selected_or_first_available_variant.price | money_without_currency | remove: ',' }}">
+            {{- product.selected_or_first_available_variant.price | money_without_currency -}}
+          </span>
+        </span>
+      </button>
+      {%- endform -%}
+
+    </div>
+  </div>
+</div>

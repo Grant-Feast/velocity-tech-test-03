@@ -1,0 +1,20 @@
+<quantity-adjuster data-module="quantity-adjuster">
+  <div class="quantity-adjuster">
+    <button type="button" name="minus" class="quantity-adjuster__button quantity-minus" data-quantity-minus>
+      {%- render 'icon',
+      icon: 'minus',
+      class: 'icon-small'
+      -%}
+    </button>
+
+    <input class="quantity-adjuster__input" type="number" name="quantity"
+      value="{%- if item -%}{{- item.quantity -}}{%- else -%}1{%- endif -%}" min="1" data-quantity-input>
+
+    <button type="button" name="plus" class="quantity-adjuster__button quantity-plus" data-quantity-plus>
+      {%- render 'icon',
+      icon: 'plus',
+      class: 'icon-small'
+      -%}
+    </button>
+  </div>
+</quantity-adjuster>
